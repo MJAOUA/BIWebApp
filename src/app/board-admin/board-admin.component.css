@@ -1,0 +1,41 @@
+div {
+  padding-left: 40px;
+    margin-top: 20px;
+    display: table;
+    align-items: center;
+    justify-content: center;
+    
+}
+
+form{
+  display: table;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.btn{
+  display: flex;
+  margin: 15px;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.iframe{
+  width: 100%;
+}
+
+.choix{
+  display:inline-table;  }
+.main{
+  max-width: 1150x;
+  margin: auto;
+  
+}
+.example-card {
+  border: 1px solid;
+  max-width: 400px;
+  width:350px;
+  height: 350px;
+}

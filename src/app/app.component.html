@@ -1,0 +1,45 @@
+<nav class="navbar navbar-light" style="background-color: #b9c5c9;
+background-image: url(https://img.freepik.com/vecteurs-libre/fond-blanc-degrade-lignes-ondulees_79603-2166.jpg?t=st=1654706499~exp=1654707099~hmac=1a95e2c110bc0dc770956c6bd7e235e8c1c3c6ff306a2fa456e8fb7fdc042560&w=996);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    border:none;height: 49px;">
+  <button *ngIf="isLoggedIn" mat-icon-button (click)="opened=!opened">
+    <mat-icon class="icn">more_vert</mat-icon>
+  </button>
+
+  <a class="navbar-brand" (click)="opened=!opened" style="color:rgb(2, 2, 2)">Reis™</a>
+  <link rel="icon" type="image/x-icon" href="favicon.ico" />
+  <ul class="navbar-nav ml-auto" *ngIf="isLoggedIn">
+    <li class="nav-item">
+      <a href="/login" class="link" (click)="logout()">Se déconnecter</a>
+    </li>
+  </ul>
+</nav>
+<p-sidebar *ngIf="isLoggedIn" [(visible)]="opened" [baseZIndex]="10000" styleClass="sidebar">
+  <img _ngcontent-c1="" appassetstenancy="" class="img-fluid flex-center" src="assets/logo-white.png">
+  <mat-divider></mat-divider>
+  <div class="logo-wrapper waves-light">
+    <ul routerLinkActive="active">
+      <br>
+      <li *ngIf="showAdminBoard">
+        <a href="/admin" class="link" routerLink="admin" (click)="opened=!opened">Dashboard Admin</a>
+      </li>
+      <br>
+      <li>
+        <a href="/user" class="link" *ngIf="isLoggedIn" routerLink="user" (click)="opened=!opened">Dashboard User</a>
+      </li>
+    </ul>
+  </div>
+</p-sidebar>
+<!-- <mat-sidenav-container>
+  <mat-sidenav mode="side" [(opened)]="!opened">
+   
+
+  </mat-sidenav>
+  <mat-sidenav-content> -->
+<div class="container">
+  <router-outlet></router-outlet>
+</div>
+<!--   </mat-sidenav-content>
+</mat-sidenav-container> -->

@@ -1,0 +1,158 @@
+<div class="container" *ngIf="isLoggedIn ;else elseBlock">
+  <div class="choix" [hidden]="hidden1">
+    <p-splitter [style]="{'width': '1150'}" styleClass="mb-5">
+      <ng-template pTemplate>
+        <div class="col flex align-items-center justify-content-center">
+          <mat-card class="example-card">
+            <mat-card-header>
+              <div mat-card class="example-header-image"></div>
+              <mat-card-title>{{dashboards[0].dash}}</mat-card-title>
+              <mat-card-subtitle>------</mat-card-subtitle>
+            </mat-card-header>
+            <img mat-card-image src="assets/3.png">
+            <mat-card-content>
+              <p>
+                
+              </p>
+            </mat-card-content>
+            <mat-card-actions>
+              <div class="buttons"><input class="btn btn-primary" type="submit" value="Selectionner"
+                  (click)="getdashurl(dashboards[0].id_dash);hidden1=!hidden1;hidden2=!hidden2;id_chosen=dashboards[0].id_dash">
+              </div>
+            </mat-card-actions>
+          </mat-card>
+          <!-- <p-card header="{{dashboards[0].dash}}">
+            <ng-template pTemplate="header">
+              <img alt="Card" src="assets/3.png">
+            </ng-template>
+            <mat-divider></mat-divider>
+            <ng-template pTemplate="footer">
+              <div class="buttons"><input class="btn btn-primary" type="submit" value="Selectionner"
+                  (click)="getdashurl(dashboards[0].id_dash);hidden1=!hidden1;hidden2=!hidden2;id_chosen=dashboards[0].id_dash">
+              </div>
+            </ng-template>
+          </p-card> -->
+        </div>
+      </ng-template>
+      <ng-template pTemplate>
+        <div class="col flex align-items-center justify-content-center">
+          <mat-card class="example-card">
+            <mat-card-header>
+              <div mat-card class="example-header-image"></div>
+              <mat-card-title>{{dashboards[1].dash}}</mat-card-title>
+              <mat-card-subtitle>--------</mat-card-subtitle>
+            </mat-card-header>
+            <img mat-card-image src="assets/2.png">
+            <mat-card-content>
+              <p>
+                
+              </p>
+            </mat-card-content>
+            <mat-card-actions>
+              <div class="buttons"><input class="btn btn-primary" type="submit" value="Selectionner"
+                  (click)="getdashurl(dashboards[1].id_dash);hidden1=!hidden1;hidden2=!hidden2;id_chosen=dashboards[1].id_dash">
+              </div>
+            </mat-card-actions>
+          </mat-card>
+          <!-- <p-card header="{{dashboards[1].dash}}">
+            <ng-template pTemplate="header">
+              <img alt="Card" src="assets/2.png">
+            </ng-template>
+            <mat-divider></mat-divider>
+            <ng-template pTemplate="footer">
+              <div class="buttons"><input class="btn btn-primary" type="submit" value="Selectionner"
+                  (click)="getdashurl(dashboards[1].id_dash);hidden1=!hidden1;hidden2=!hidden2;id_chosen=dashboards[1].id_dash">
+              </div>
+            </ng-template>
+          </p-card> -->
+        </div>
+      </ng-template>
+      <ng-template pTemplate>
+        <div class="col flex align-items-center justify-content-center">
+          <mat-card class="example-card">
+            <mat-card-header>
+              <div mat-card class="example-header-image"></div>
+              <mat-card-title>{{dashboards[2].dash}}</mat-card-title>
+              <mat-card-subtitle>--------</mat-card-subtitle>
+            </mat-card-header>
+            <img mat-card-image src="assets/1.png">
+            <mat-card-content>
+              <p>
+                
+              </p>
+            </mat-card-content>
+            <mat-card-actions>
+              <div class="buttons"><input class="btn btn-primary" type="submit" value="Selectionner"
+                  (click)="getdashurl(dashboards[2].id_dash);hidden1=!hidden1;hidden2=!hidden2;id_chosen=dashboards[2].id_dash">
+              </div>
+            </mat-card-actions>
+          </mat-card>
+          <!-- <p-card header="{{dashboards[2].dash}}">
+            <ng-template pTemplate="header">
+              <img alt="Card" src="assets/1.png">
+            </ng-template>
+            <mat-divider></mat-divider>
+            <ng-template pTemplate="footer">
+              <div class="buttons"><input class="btn btn-primary" type="submit" value="Selectionner"
+                  (click)="getdashurl(dashboards[2].id_dash);hidden1=!hidden1;hidden2=!hidden2;id_chosen=dashboards[2].id_dash">
+              </div>
+            </ng-template>
+          </p-card> -->
+        </div>
+      </ng-template>
+    </p-splitter>
+
+  </div>
+
+  <div class="iframe" [hidden]="hidden2">
+
+
+    <iframe [src]="url" width="1000" height="550"></iframe>
+    <div class="btn">
+      <input id="btn1" class="btn btn-primary" type="submit" value="Revenir vers choix de dashboard"
+        (click)="hidden1=!hidden1;hidden2=!hidden2">
+      <button class="btn btn-primary"><a href="{{dashboards[id_chosen].url}}" target="_blank" style="color: white">Vers
+          Kibana</a></button>
+      <input id="btn2" class="btn btn-primary" type="submit" value="Modifier dashboard"
+        (click)="hidden3=!hidden3;hidden2=!hidden2">
+    </div>
+  </div>
+
+  <form [hidden]="hidden3">
+    <div>
+      <mat-form-field appearance="fill">
+        <mat-label>Nom du Dashboard</mat-label>
+        <input matInput [(ngModel)]="dashboard.dash" [ngModelOptions]="{standalone: true}">
+      </mat-form-field>
+
+    </div>
+    <div>
+      <mat-form-field appearance="fill">
+        <mat-label>URL</mat-label>
+        <textarea matInput [(ngModel)]="dashboard.url" [ngModelOptions]="{standalone: true}"></textarea>
+      </mat-form-field>
+    </div>
+    <div>
+      <mat-form-field appearance="fill">
+        <mat-label>Role associé</mat-label>
+        <mat-select [(ngModel)]="dashboard.role" [ngModelOptions]="{standalone: true}">
+          <mat-option *ngFor="let item of roles_list" [value]="item.id">{{item.id}} : {{item.name}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+
+      <div class="btn">
+        <input class="btn btn-primary" type="submit" value="Retour Vers Dashboard"
+          (click)="hidden3=!hidden3;hidden2=!hidden2">
+        <input class="btn btn-primary" type="submit" value="Mettre à jour" (click)="updateDashboard(id_chosen)">
+      </div>
+    </div>
+  </form>
+
+</div>
+<div>
+  <ng-template #elseBlock> Veuiller vous connecter !
+    <a routerLink="/login">
+      <button class="btn btn-success pull-right">Se connecter</button></a>
+  </ng-template>
+</div>
