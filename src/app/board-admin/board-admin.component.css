@@ -1,4 +1,4 @@
-div {
+.test {
   padding-left: 40px;
     margin-top: 20px;
     display: table;
@@ -13,21 +13,20 @@ form{
   justify-content: center;
   width: 100%;
 }
-
+/* 
 .btn{
   display: flex;
   margin: 15px;
   align-items: center;
   justify-content: center;
   width: 100%;
-}
+} */
 
 .iframe{
   width: 100%;
 }
 
-.choix{
-  display:inline-table;  }
+
 .main{
   max-width: 1150x;
   margin: auto;
@@ -38,4 +37,36 @@ form{
   max-width: 400px;
   width:350px;
   height: 350px;
+}
+img {
+  width : 100%;
+  height : 100%;
+  position: relative;
+  align-items: center;
+  justify-content: center;
+  }
+
+  
+label {
+  display: block;
+  margin-top: 10px;
+}
+
+.card-container.card {
+  align-items: center;
+  max-width: 400px ;
+  padding: 40px 40px;
+}
+
+.card {
+  background-color: #eaeff0;
+  padding: 20px 25px 30px;
+  margin: 0 auto 25px;
+  margin-top: 50px;
+  -moz-border-radius: 2px;
+  -webkit-border-radius: 2px;
+  border-radius: 2px;
+  -moz-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+  -webkit-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
 }

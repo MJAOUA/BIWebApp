@@ -13,6 +13,7 @@ import { TokenStorageService } from '../_services/token-storage.service';
   styleUrls: ['./board-admin.component.css']
 })
 export class BoardAdminComponent implements OnInit {
+  private roles: string[] = [];
   selected = new FormControl(0);
   hidden1: boolean=false;
   hidden2: boolean=true;
@@ -30,9 +31,11 @@ export class BoardAdminComponent implements OnInit {
   constructor(private sanitizer: DomSanitizer, private DashboardService: DashboardService, private tokenStorageService: TokenStorageService) { }
 
   ngOnInit(): void {
+    const user = this.tokenStorageService.getUser();
     this.isLoggedIn = !!this.tokenStorageService.getToken();
-
-    if (this.isLoggedIn) {
+    this.roles = user.roles;
+    
+    if (this.isLoggedIn && this.roles.includes('ROLE_ADMIN')) {
       this.dashboards = this.getAllDashboardsByRole();
       this.roles_list = this.retrieveAllRoles();
     }

@@ -1,88 +1,40 @@
 <div class="container" *ngIf="isLoggedIn ;else elseBlock">
   <div class="choix" [hidden]="hidden1">
-    <p-splitter [style]="{'width': '1150'}" styleClass="mb-5">
-      <ng-template pTemplate>
-        <div class="col flex align-items-center justify-content-center">
-          <mat-card class="example-card">
-            <mat-card-header>
-              <div mat-card class="example-header-image"></div>
-              <mat-card-title>{{dashboards[0].dash}}</mat-card-title>
-              <mat-card-subtitle>------</mat-card-subtitle>
-            </mat-card-header>
-            <img mat-card-image src="assets/3.png">
-            <mat-card-content>
-              <p>
-
-              </p>
-            </mat-card-content>
-            <mat-card-actions>
-              <div class="buttons"><input class="btn btn-primary" type="submit" value="Selectionner"
-                  (click)="getdashurl(dashboards[0].id_dash);hidden1=!hidden1;hidden2=!hidden2;id_chosen=dashboards[0].id_dash">
-              </div>
-            </mat-card-actions>
-          </mat-card>
-
+    <div class="row row-cols-1 row-cols-md-3 g-4"> <br>
+      <div class="col" *ngFor="let thing of dashboards">
+        <div class="card h-100">
+          <div class="card-header"></div>
+          <div class="card-body">
+            <h5 class="card-title">{{thing.dash}}</h5>
+            <p class="card-text">
+              <br>
+              <img mat-card-image src="assets/{{thing.id_dash -3}}.png">
+            </p>
+          </div>
+          <div class="card-footer text-center">
+            <div class="buttons"><input class="btn btn-primary" type="submit" value="Selectionner"
+                (click)="getdashurl(thing.id_dash);hidden1=!hidden1;hidden2=!hidden2;id_chosen=thing.id_dash">
+            </div>
+          </div>
         </div>
-      </ng-template>
-      <ng-template pTemplate>
-        <div class="col flex align-items-center justify-content-center">
-          <mat-card class="example-card">
-            <mat-card-header>
-              <div mat-card class="example-header-image"></div>
-              <mat-card-title>{{dashboards[1].dash}}</mat-card-title>
-              <mat-card-subtitle>--------</mat-card-subtitle>
-            </mat-card-header>
-            <img mat-card-image src="assets/2.png">
-            <mat-card-content>
-              <p>
-
-              </p>
-            </mat-card-content>
-            <mat-card-actions>
-              <div class="buttons"><input class="btn btn-primary" type="submit" value="Selectionner"
-                  (click)="getdashurl(dashboards[1].id_dash);hidden1=!hidden1;hidden2=!hidden2;id_chosen=dashboards[1].id_dash">
-              </div>
-            </mat-card-actions>
-          </mat-card>
-
-        </div>
-      </ng-template>
-      <ng-template pTemplate>
-        <div class="col flex align-items-center justify-content-center">
-          <mat-card class="example-card">
-            <mat-card-header>
-              <div mat-card class="example-header-image"></div>
-              <mat-card-title>{{dashboards[2].dash}}</mat-card-title>
-              <mat-card-subtitle>--------</mat-card-subtitle>
-            </mat-card-header>
-            <img mat-card-image src="assets/1.png">
-            <mat-card-content>
-              <p>
-
-              </p>
-            </mat-card-content>
-            <mat-card-actions>
-              <div class="buttons"><input class="btn btn-primary" type="submit" value="Selectionner"
-                  (click)="getdashurl(dashboards[2].id_dash);hidden1=!hidden1;hidden2=!hidden2;id_chosen=dashboards[2].id_dash">
-              </div>
-            </mat-card-actions>
-          </mat-card>
-
-        </div>
-      </ng-template>
-    </p-splitter>
-
+      </div>
+    </div>
   </div>
 
-  <div class="iframe" [hidden]="hidden2">
-
-    <iframe [src]="url" width="1000" height="550"></iframe>
-    <div class="btn">
-      <input id="btn1" class="btn btn-primary" type="submit" value="Revenir vers choix de dashboard"
-        (click)="hidden1=!hidden1;hidden2=!hidden2">
-      <button class="btn btn-primary"><a href="{{dashboards[id_chosen].url}}" target="_blank" style="color: white">Vers
-          Kibana</a></button> 
+  <div class="float-right" [hidden]="hidden2">
+    <div class="btn-group" role="group">
+      <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown"
+        aria-haspopup="true" aria-expanded="false" [disabled]="hidden2">
+        Action
+      </button>
+      <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+        <a (click)="hidden1=!hidden1;hidden2=!hidden2" class="dropdown-item">Revenir vers choix de dashboard</a>
+       <!--  <a class="dropdown-item" target="_blank" href="{{dashboards[id_chosen].url}}">Vers Kibana</a> -->
+      </div>
     </div>
+  </div>
+  <div class="embed-responsive embed-responsive-16by9" [hidden]="hidden2">
+    <iframe class="embed-responsive-item" [src]="url" width="1000" height="550"></iframe>
   </div>
 
 </div>

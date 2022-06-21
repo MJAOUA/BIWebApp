@@ -28,8 +28,9 @@ import { MatCardModule } from '@angular/material/card';
 import { SidebarModule } from 'primeng/sidebar';
 import { MatDividerModule } from '@angular/material/divider';
 import { CardModule } from 'primeng/card';
-import {ButtonModule} from 'primeng/button';
-import {SplitterModule} from 'primeng/splitter';
+import { ButtonModule } from 'primeng/button';
+import { SplitterModule } from 'primeng/splitter';
+
 @NgModule({
   declarations: [
     AppComponent,
