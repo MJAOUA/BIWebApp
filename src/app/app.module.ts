@@ -6,7 +6,6 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
-import { RegisterComponent } from './register/register.component';
 import { HomeComponent } from './home/home.component';
 import { ProfileComponent } from './profile/profile.component';
 import { BoardAdminComponent } from './board-admin/board-admin.component';
@@ -31,16 +30,31 @@ import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
 import { SplitterModule } from 'primeng/splitter';
 
+import { BoldReportDesignerModule  } from '@boldreports/angular-reporting-components';
+import { BoldReportViewerModule } from '@boldreports/angular-reporting-components';
+// Report viewer
+import '@boldreports/javascript-reporting-controls/Scripts/bold.report-viewer.min';
+// Report Designer
+import '@boldreports/javascript-reporting-controls/Scripts/bold.report-designer.min';
+
+// data-visualization
+import '@boldreports/javascript-reporting-controls/Scripts/data-visualization/ej.bulletgraph.min';
+import '@boldreports/javascript-reporting-controls/Scripts/data-visualization/ej.chart.min';
+import { ReportsComponent } from './reports/reports.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { UsersComponent } from './users/users.component';
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    RegisterComponent,
     HomeComponent,
     ProfileComponent,
     BoardAdminComponent,
     BoardModeratorComponent,
-    BoardUserComponent
+    BoardUserComponent,
+    ReportsComponent,
+    DashboardComponent,
+    UsersComponent
   ],
   imports: [
     BrowserModule,
@@ -64,7 +78,9 @@ import { SplitterModule } from 'primeng/splitter';
     SidebarModule,
     MatDividerModule,
     CardModule,
-    SplitterModule
+    SplitterModule,
+    BoldReportViewerModule,
+    BoldReportDesignerModule
   ],
   providers: [authInterceptorProviders],
   bootstrap: [AppComponent]

@@ -1,0 +1,142 @@
+<ul *ngIf="isLoggedIn ;else elseBlock" class="nav nav-tabs" id="myTab" role="tablist">
+    <li class="nav-item">
+        <a class="nav-link active" id="home-tab" data-toggle="tab" href="#dashlists" role="tab" aria-controls="home"
+            aria-selected="true">
+            <i class="fas fa-list"></i>
+            Liste des dashboards</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#adddash" role="tab" aria-controls="profile"
+            aria-selected="false">
+            <i class="fas fa-plus"></i>
+            Ajouter un dashboard</a>
+    </li>
+</ul>
+<div class="container" *ngIf="isLoggedIn">
+    <div class="tab-content" id="myTabContent">
+        <div class="tab-pane fade show active" id="dashlists" role="tabpanel" aria-labelledby="home-tab">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">Nom du dashboard</th>
+                        <th scope="col">URL</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let thing of dashboards">
+                        <td scope="row">{{thing.dash}}</td>
+                        <td scope="row">
+                            <a href="{{thing.url}}" target="_blank" class="btn btn-primary btn-sm"
+                                style="color: white;">Vers
+                                Kibana</a>
+                        </td>
+                        <td scope="row">
+                            <button type="button" class="btn btn-primary btn-sm" (click)="id=thing.id_dash"
+                                data-toggle="modal" data-target="#deleteModal">
+                                <i class="fas fa-remove"></i>
+                                Suppimer
+                            </button>
+                            <!--   &nbsp;
+                            <button type="button" class="btn btn-primary btn-sm"
+                                (click)="id=thing.id_dash;dashboard=getDashboard(id)" data-toggle="modal"
+                                data-target="#editModal">
+                                <i class="fas fa-user-cog"></i>
+                            </button> -->
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Voulez-vous vraiment supprimer ce tableau de
+                                bord ?</h5>
+                            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">Cliquer sur "Supprimer" pour confirmer la supression du Tableau de bord
+                            !</div>
+                        <div class="modal-footer">
+                            <button class="btn btn-secondary" type="button" data-dismiss="modal">Annuler</button>
+                            <a class="btn btn-primary" (click)="deleteDashboard(id)" data-dismiss="modal">Supprimer</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Formulaire de modification</h5>
+                            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-secondary" type="button" data-dismiss="modal">Annuler</button>
+                            <a class="btn btn-primary">Modifier</a>
+                        </div>
+                    </div>
+                </div>
+            </div> -->
+        </div>
+        <div class="tab-pane fade" id="adddash" role="tabpanel" aria-labelledby="profile-tab">
+            <form novalidate>
+                <div class="form-group">
+                    <label for="validationTooltip01">Intitulé du dashboard</label>
+                    <input type="text" class="form-control" id="validationTooltip01" [(ngModel)]="dashboard.dash"
+                        [ngModelOptions]="{standalone: true}" required #dash="ngModel">
+                    <div class="alert alert-danger" *ngIf="dash.invalid && dash.touched">
+                        L'intitutlé du tableau de bord est un champ obligatoire !
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="validationTooltip02">Role associé</label>
+                    <select [(ngModel)]="dashboard.role" [ngModelOptions]="{standalone: true}" class="form-control"
+                        id="validationTooltip02" required #role="ngModel">
+                        <option *ngFor="let item of roles_list" [value]="item.id">{{item.name}}</option>
+                    </select>
+                    <div class="alert alert-danger" *ngIf="role.invalid && role.touched">
+                        Le choix du role associé est obligatoire !
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="validationTooltip03">URL</label>
+                    <textarea [(ngModel)]="dashboard.url" [ngModelOptions]="{standalone: true}" class="form-control"
+                        id="validationTooltip03" rows="3" required #uri="ngModel" minlength="50"></textarea>
+                    <div class="alert alert-danger" *ngIf="uri.invalid && uri.touched">
+                        Veuillez saisir l'URL du tableau de bord !
+                    </div>
+                </div>
+                <br>
+                <div class="float-right">
+                    <button class="btn btn-primary" type="submit" (click)="addDashboard()"
+                        [disabled]="dash.invalid || uri.invalid || role.invalid">Ajouter Dashboard</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<ng-template #elseBlock>
+    <div class="col-sm-6">
+        <div class="card border border-danger shadow-0 mb-3">
+            <div class="card-header">Accès interdit</div>
+            <div class="card-body">
+                <h5 class="card-title">Veuillez vous connecter</h5>
+                <p class="card-text">
+                    Cliquer sur le bouton pour être rediriger vers l'interface de connexion
+                </p>
+                <a routerLink="/login">
+                    <button class="btn btn-danger pull-right">Se connecter</button></a>
+            </div>
+        </div>
+    </div>
+</ng-template>

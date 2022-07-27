@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Dashboard } from '../Models/dashboard';
-import { Role } from '../Models/Role';
+
 const dash_url='http://localhost:8080/dashboard/';
 
 @Injectable({
@@ -30,7 +30,7 @@ export class DashboardService {
   }
 
   deleteDashboardById(id: number) {
-    return this.http.delete(dash_url+'deleteDashboard' + id);
+    return this.http.delete(dash_url+'deleteDashboard/' + id);
   }
 
   getAllDashboardsById(id: number): Observable<Dashboard[]> {
@@ -45,11 +45,4 @@ export class DashboardService {
     return this.http.get<Dashboard[]>(dash_url+'getAllDashboardsByRole/'+role);
   }
 
-  getIdByRole(role:String):Observable<string>{
-    return this.http.get(dash_url+'getIdByRole/'+role, { responseType: 'text' })
-  }
-
-  retrieveAllRoles():Observable<Role[]>{
-    return this.http.get<Role[]>(dash_url+'retrieveAllRoles');
-  }
 }

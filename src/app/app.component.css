@@ -1,3 +1,16 @@
 .main-content {
     text-align: center;
 }
+#accordionSidebar {
+    background-color: #293a48;
+    background-image: url(https://mdbcdn.b-cdn.net/img/Photos/Others/sidenav1.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+.double-nav .breadcrumb-dn {
+    color: #fff;
+}
+.side-nav.wide.slim .sn-ad-avatar-wrapper a span {
+  display: none;
+}

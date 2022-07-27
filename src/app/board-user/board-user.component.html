@@ -1,19 +1,17 @@
 <div class="container" *ngIf="isLoggedIn ;else elseBlock">
+
   <div class="choix" [hidden]="hidden1">
-    <div class="row row-cols-1 row-cols-md-3 g-4"> <br>
-      <div class="col" *ngFor="let thing of dashboards">
-        <div class="card h-100">
-          <div class="card-header"></div>
-          <div class="card-body">
-            <h5 class="card-title">{{thing.dash}}</h5>
-            <p class="card-text">
-              <br>
-              <img mat-card-image src="assets/{{thing.id_dash -3}}.png">
-            </p>
-          </div>
-          <div class="card-footer text-center">
-            <div class="buttons"><input class="btn btn-primary" type="submit" value="Selectionner"
-                (click)="getdashurl(thing.id_dash);hidden1=!hidden1;hidden2=!hidden2;id_chosen=thing.id_dash">
+    <br><br><br>
+    <div class="row align-items-center">
+      <div class="row row-cols-1 row-cols-md-3 g-4"> <br>
+        <div class="col" *ngFor="let thing of dashboards">
+          <div class="card h-100">
+            <img class="img-fluid" src="assets/userdash.jpg" alt="Card image cap">
+            <div class="card-block">
+              <h4 class="card-title ">
+                <a (click)="getdashurl(thing.id_dash);hidden1=!hidden1;hidden2=!hidden2;id_chosen=thing.id_dash;url=thing.url"
+                  class="btn btn-primary w-100" style="color: white;">{{thing.dash}}</a>
+              </h4>
             </div>
           </div>
         </div>
@@ -29,7 +27,6 @@
       </button>
       <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
         <a (click)="hidden1=!hidden1;hidden2=!hidden2" class="dropdown-item">Revenir vers choix de dashboard</a>
-       <!--  <a class="dropdown-item" target="_blank" href="{{dashboards[id_chosen].url}}">Vers Kibana</a> -->
       </div>
     </div>
   </div>

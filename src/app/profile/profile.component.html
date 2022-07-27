@@ -1,27 +1,48 @@
-<div class="container" *ngIf="currentUser; else loggedOut">
-    <!-- <header class="jumbotron">
-      <h3>
-        <strong>{{ currentUser.username }}</strong> Profile
-      </h3>
-    </header>
-    <p>
-      <strong>Token:</strong>
-      {{ currentUser.accessToken.substring(0, 20) }} ...
-      {{ currentUser.accessToken.substr(currentUser.accessToken.length - 20) }}
-    </p>
-    <p>
-      <strong>Email:</strong>
-      {{ currentUser.email }}
-    </p>
-    <strong>Roles:</strong>
-    <ul>
-      <li *ngFor="let role of currentUser.roles">
-        {{ role }}
-      </li>
-    </ul> -->
+<div class="container" *ngIf="isLoggedIn; else loggedOut">
+  <form class="row g-3 needs-validation" novalidate>
+    <div class="input-group mb-3">
+      <input type="text" [value]="user.username" class="form-control" aria-describedby="button-addon2"
+        [disabled]="btn1" />
+      <button class="btn btn-outline-primary" type="button" id="button-addon2" data-mdb-ripple-color="dark"
+        (click)="btn1=!btn1">
+        Modifier
+      </button>
+    </div>
+    <div class="input-group mb-3">
+      <input type="password" [value]="user.password" class="form-control" aria-describedby="button-addon2"
+        [disabled]="btn2" />
+      <button class="btn btn-outline-primary" type="button" id="button-addon2" data-mdb-ripple-color="dark"
+        (click)="btn2=!btn2">
+        Modifier
+      </button>
+    </div>
+    <div class="input-group mb-3">
+      <input type="email" [value]="user.email" class="form-control" aria-describedby="button-addon2"
+        [disabled]="btn3" />
+      <button class="btn btn-outline-primary" type="button" id="button-addon2" data-mdb-ripple-color="dark"
+        (click)="btn3=!btn3">
+        Modifier
+      </button>
+    </div>
+    <div class="form-outline">
+      Role :
+      <input class="form-control" id="formControlReadonly" type="text" value="{{ role.substring(5, role.length) }}"
+        aria-label="readonly input example" readonly *ngFor="let role of user.roles" />
+    </div>
+  </form>
+</div>
+<ng-template #loggedOut>
+  <div class="col-sm-6">
+    <div class="card border border-danger shadow-0 mb-3">
+      <div class="card-header">Accès interdit</div>
+      <div class="card-body">
+        <h5 class="card-title">Veuillez vous connecter</h5>
+        <p class="card-text">
+          Cliquer sur le bouton pour être rediriger vers l'interface de connexion
+        </p>
+        <a routerLink="/login">
+          <button class="btn btn-danger pull-right">Se connecter</button></a>
+      </div>
+    </div>
   </div>
-  
-  <ng-template #loggedOut>
-    Please login.
-  </ng-template>
-  
+</ng-template>

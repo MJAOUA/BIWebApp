@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { Dashboard } from '../Models/dashboard';
 import { DashboardService } from '../_services/dashboard.service';
+import { RoleService } from '../_services/role.service';
 import { TokenStorageService } from '../_services/token-storage.service';
 
 @Component({
@@ -10,26 +11,18 @@ import { TokenStorageService } from '../_services/token-storage.service';
   styleUrls: ['./board-user.component.css']
 })
 export class BoardUserComponent implements OnInit {
-  hidden = false;
   hidden1: boolean = false;
   hidden2: boolean = true;
   url: SafeResourceUrl = "";
-  user_role: string = "";
   isLoggedIn = false;
   dashboards: Dashboard[];
-  roles_list: any;
-  role: any;
   id_chosen: number = 0;
-  constructor(private sanitizer: DomSanitizer, private DashboardService: DashboardService, private tokenStorageService: TokenStorageService) { }
+  constructor(private RoleService: RoleService, private sanitizer: DomSanitizer, private DashboardService: DashboardService, private tokenStorageService: TokenStorageService) { }
 
   ngOnInit(): void {
     this.isLoggedIn = !!this.tokenStorageService.getToken();
+    this.dashboards = this.getAllDashboardsByRole();
 
-    if (this.isLoggedIn) {
-      const user = this.tokenStorageService.getUser();
-
-      this.dashboards = this.getAllDashboardsByRole();
-    }
   }
 
   getdashurl(id: number): void {
@@ -38,11 +31,9 @@ export class BoardUserComponent implements OnInit {
   }
 
   getAllDashboardsByRole(): Dashboard[] {
-    const user = this.tokenStorageService.getUser();
-    this.DashboardService.getIdByRole(user.roles[0]).subscribe(res => {
-      this.role = res;
-      this.DashboardService.getAllDashboardsByRole(1).subscribe(_url => this.dashboards = _url);
-    });
+
+    this.DashboardService.getAllDashboardsByRole(1).subscribe(_url => this.dashboards = _url);
+
     return this.dashboards;
   }
 }

@@ -1,5 +1,52 @@
-<div class="container">
-  <header class="jumbotron">
-    <p>{{ content }}</p>
-  </header>
+<div class="container-fluid" *ngIf="isLoggedIn; else loggedOut">
+  <br><br><br>
+  <div class="row align-items-center">
+    <div class="row row-cols-1 row-cols-md-3 g-4"> <br>
+      <div class="col" *ngIf="check==1">
+        <div class="card h-100">
+          <img class="img-fluid" src="https://i.postimg.cc/BQrG8xgt/admindash.jpg" alt="Card image cap">
+          <div class="card-block">
+            <h4 class="card-title ">
+              <a href="/admin" class="btn btn-primary w-100" style="color: white;">Admin Dashboards</a>
+            </h4>
+          </div>
+        </div>
+      </div>
+      <div class="col" *ngIf="check>0">
+        <div class="card h-100">
+          <img class="img-fluid" src="https://i.postimg.cc/pr7MJ8MG/reports.jpg" alt="Card image cap">
+          <div class="card-block">
+            <h4 class="card-title ">
+              <a href="/reports" class="btn btn-primary w-100" style="color: white;">Reporting</a>
+            </h4>
+          </div>
+        </div>
+      </div>
+      <div class="col" *ngIf="check>0">
+        <div class="card h-100">
+          <img class="img-fluid" src="https://i.postimg.cc/sDQrDn5t/userdash.jpg" alt="Card image cap">
+          <div class="card-block">
+            <h4 class="card-title ">
+              <a href="/user" class="btn btn-primary w-100" style="color: white;">User Dashboards</a>
+            </h4>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
+<ng-template #loggedOut>
+  <div class="col-sm-6">
+    <div class="card border border-danger shadow-0 mb-3">
+      <div class="card-header">Accès interdit</div>
+      <div class="card-body">
+        <h5 class="card-title">Veuillez vous connecter</h5>
+        <p class="card-text">
+          Cliquer sur le bouton pour être rediriger vers l'interface de connexion
+        </p>
+        <a routerLink="/login">
+          <button class="btn btn-danger pull-right">Se connecter</button></a>
+      </div>
+    </div>
+  </div>
+</ng-template>

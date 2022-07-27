@@ -20,6 +20,12 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "allowedCommonJsDependencies": [
+              "@boldreports/javascript-reporting-controls/Scripts/bold.report-viewer.min",
+              "@boldreports/javascript-reporting-controls/Scripts/bold.report-designer.min",
+              "@boldreports/javascript-reporting-controls/Scripts/data-visualization/ej.bulletgraph.min",
+              "@boldreports/javascript-reporting-controls/Scripts/data-visualization/ej.chart.min"
+            ],
             "outputPath": "dist/Reis",
             "index": "src/index.html",
             "main": "src/main.ts",
@@ -35,13 +41,21 @@
             ],
             "styles": [
               "./node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css",
-              "src/styles.css"
+              "./node_modules/@boldreports/javascript-reporting-controls/Content/material/bold.reports.all.min.css",
+              "./node_modules/@boldreports/javascript-reporting-controls/Content/material/bold.reportdesigner.min.css",
+              "src/styles.css",
+              "./node_modules/codemirror/lib/codemirror.css",
+              "./node_modules/codemirror/addon/hint/show-hint.css"
             ],
             "scripts": [
               "./node_modules/jquery/dist/jquery.min.js",
               "./node_modules/popper.js/dist/popper.js",
               "./node_modules/bootstrap/dist/js/bootstrap.min.js",
-              "src/js/sb-admin-2.min.js"
+              "src/js/sb-admin-2.min.js",
+              "./node_modules/codemirror/lib/codemirror.js",
+              "./node_modules/codemirror/addon/hint/show-hint.js",
+              "./node_modules/codemirror/addon/hint/sql-hint.js",
+              "./node_modules/codemirror/mode/vb/vb.js"
             ]
           },
           "configurations": {

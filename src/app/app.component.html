@@ -7,12 +7,12 @@
     <ul *ngIf="isLoggedIn" class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
       <!-- Sidebar - Brand -->
-      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="#">
+      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/home">
         <div class="sidebar-brand-icon rotate-n-15">
 
         </div>
         <div class="sidebar-brand-text mx-3"><img class="img-fluid flex-center"
-            src="https://i.ibb.co/q0r0cmr/logo-white.png"></div>
+            src="https://i.postimg.cc/Hn3q3kVN/unnamed-1.png" style="opacity:1"></div>
       </a>
 
       <!-- Divider -->
@@ -20,26 +20,38 @@
 
       <li class="nav-item active">
         <br>
+        <a class="nav-link collapsed" href="/home">
+          <i class="fa fa-home"></i>
+          <span>Accueil</span>
+        </a>
+        <hr class="sidebar-divider my-0">
+        <hr class="sidebar-divider my-0">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true"
           aria-controls="collapseTwo">
-          <i class="fas fa-fw fa-tachometer-alt"></i>
+          <i class='fas fa-tachometer-alt'></i>
           <span>Tableaux de bords</span>
         </a>
         <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
-            <!-- <h6 class="collapse-header">Liste des tableaux de bords</h6> -->
+            <a *ngIf="showAdminBoard" class="collapse-item" href="/dashboard">Gérer les tableaux de bord</a>
             <a *ngIf="showAdminBoard" class="collapse-item" href="/admin">Tableau de bord Admin</a>
             <a class="collapse-item" href="/user">Tableau de bord Utilisateur</a>
           </div>
         </div>
-      </li>
 
+        <a class="nav-link collapsed" href="/reports">
+          <i class="fas fa-file-alt"></i>
+          <span>Reporting</span>
+        </a>
+
+        <a class="nav-link collapsed" *ngIf="showAdminBoard" href="/users">
+          <i class="fas fa-users"></i>
+          <span>Gestion des utilisateurs</span>
+        </a>
+      </li>
       <!-- Divider -->
       <hr class="sidebar-divider d-none d-md-block">
-      <!-- Sidebar Toggler (Sidebar) -->
-      <!--       <div class="text-center d-none d-md-inline">
-        <button class="rounded-circle border-0" id="sidebarToggle"></button>
-      </div> -->
+
     </ul>
     <!-- End of Sidebar -->
     <!-- Content Wrapper -->
@@ -47,31 +59,44 @@
       <!-- Main Content -->
       <div id="content">
         <!-- Topbar -->
-        <nav class="navbar navbar-expand navbar-light bg-light topbar mb-4 static-top shadow">
-          <img *ngIf="!isLoggedIn" class="img-fluid flex-center" src="https://i.ibb.co/q0r0cmr/logo-white.png">
-          <!-- Sidebar Toggle (Topbar) -->
-          <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
-            <i class="fa fa-bars"></i>
-          </button>
-          <!-- Topbar Navbar -->
-          <ul class="navbar-nav ml-auto">
-            <!-- Nav Item - User Information -->
-            <li class="nav-item dropdown no-arrow">
-              <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
-                aria-haspopup="true" aria-expanded="false">
-                <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{username}}</span>
-              </a>
-              <!-- Dropdown - User Information -->
-              <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
-                  <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                  Logout
-                </a>
-              </div>
-            </li>
-          </ul>
+        <!-- Navbar -->
+        <nav *ngIf="isLoggedIn" class="navbar navbar-expand-lg navbar-light bg-light">
+          <!-- Container wrapper -->
+          <p style="color:rgb(248, 249, 250)">Reis™AML</p>
+          <div class="container">
+            <!-- Navbar brand -->
+            <img *ngIf="!isLoggedIn" class="img-fluid flex-center" src="https://i.postimg.cc/TPYBvL6P/unnamed.png">
+
+            <!-- Collapsible wrapper -->
+            <div class="collapse navbar-collapse" id="navbarButtonsExample">
+              <ul class="navbar-nav ml-auto">
+                <!-- Nav Item - User Information -->
+                <li class="nav-item dropdown no-arrow">
+                  <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">
+                    <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{username}} </span>
+                    <i class="fas fa-chevron-circle-down fa-lg"></i>
+                  </a>
+                  <!-- Dropdown - User Information -->
+                  <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                    aria-labelledby="userDropdown">
+                    <a class="dropdown-item" href="/profile">
+                      <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                      Profile
+                    </a>
+                    <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                      <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                      Logout
+                    </a>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <!-- Collapsible wrapper -->
+          </div>
+          <!-- Container wrapper -->
         </nav>
+        <!-- Navbar -->
         <!-- End of Topbar -->
         <!-- Begin Page Content -->
         <div class="container-fluid">

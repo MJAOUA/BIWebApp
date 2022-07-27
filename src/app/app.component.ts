@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Dashboard } from './Models/dashboard';
-import { DashboardService } from './_services/dashboard.service';
 import { TokenStorageService } from './_services/token-storage.service';
 
 @Component({
@@ -17,7 +16,12 @@ export class AppComponent implements OnInit {
   showModeratorBoard = false;
   username?: string;
   items: Dashboard[];
-  constructor(private tokenStorageService: TokenStorageService, private DashboardService: DashboardService) { }
+  title = 'reportviewerapp';
+  public serviceUrl: string;
+  public reportPath: string;
+  constructor(private tokenStorageService: TokenStorageService) {
+
+  }
 
   ngOnInit(): void {
     this.isLoggedIn = !!this.tokenStorageService.getToken();
@@ -26,7 +30,6 @@ export class AppComponent implements OnInit {
       const user = this.tokenStorageService.getUser();
       this.roles = user.roles;
       this.showAdminBoard = this.roles.includes('ROLE_ADMIN');
-      //this.showModeratorBoard = this.roles.includes('ROLE_MODERATOR');
       this.username = user.username;
     }
   }

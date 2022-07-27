@@ -1,0 +1,193 @@
+<ul *ngIf="isLoggedIn ;else elseBlock" class="nav nav-tabs" id="myTab" role="tablist">
+  <li class="nav-item">
+    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#userslist" role="tab" aria-controls="home"
+      aria-selected="true" (click)="users=getAllUsers()">
+      <i class="fas fa-users"></i>
+      Liste des utilisateurs</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#adduser" role="tab" aria-controls="profile"
+      aria-selected="false" (click)="isSuccessful=false">
+      <i class="fas fa-user-plus"></i>
+      Ajouter un utilisateur</a>
+  </li>
+</ul>
+<div *ngIf="isLoggedIn" class="tab-content" id="myTabContent">
+  <div class="tab-pane fade show active" id="userslist" role="tabpanel" aria-labelledby="home-tab">
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th scope="col">Username</th>
+          <th scope="col">Email</th>
+          <th scope="col">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let thing of users">
+          <td scope="row">{{thing.username}}</td>
+          <td scope="row">{{thing.email}}</td>
+          <td scope="row">
+            <button type="button" class="btn btn-primary btn-sm" (click)="id=thing.id" data-toggle="modal"
+              data-target="#deleteModal">
+              <i class="fas fa-user-minus"></i>
+            </button>
+            &nbsp;
+            <button type="button" class="btn btn-primary btn-sm" (click)="id=thing.id;user=getUser(id)"
+              data-toggle="modal" data-target="#editModal">
+              <i class="fas fa-user-cog"></i>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+      aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Voulez-vous vraiment supprimer cet utilisateur ?</h5>
+            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div class="modal-body">Cliquer sur "Supprimer" pour confirmer la supression de l'utilisateur !</div>
+          <div class="modal-footer">
+            <button class="btn btn-secondary" type="button" data-dismiss="modal">Annuler</button>
+            <a class="btn btn-primary" (click)="deleteUser(id)" data-dismiss="modal">Supprimer</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+      aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Formulaire de modification</h5>
+            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form *ngIf="!isSuccessful" name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
+              <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" class="form-control" name="username" [(ngModel)]="form.username" required
+                  minlength="3" maxlength="20" #username="ngModel" [value]="user.username" />
+                <div class="alert-danger" *ngIf="username.errors && f.submitted">
+                  <div *ngIf="username.errors.required">Username is required</div>
+                  <div *ngIf="username.errors.minlength">
+                    Username must be at least 3 characters
+                  </div>
+                  <div *ngIf="username.errors.maxlength">
+                    Username must be at most 20 characters
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" class="form-control" name="email" [value]="user.email" [(ngModel)]="form.email"
+                  required email #email="ngModel" />
+                <div class="alert-danger" *ngIf="email.errors && f.submitted">
+                  <div *ngIf="email.errors.required">Email is required</div>
+                  <div *ngIf="email.errors.email">
+                    Email must be a valid email address
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" class="form-control" name="password" [value]="user.password"
+                  [(ngModel)]="form.password" required minlength="6" #password="ngModel" />
+                <div class="alert-danger" *ngIf="password.errors && f.submitted">
+                  <div *ngIf="password.errors.required">Password is required</div>
+                  <div *ngIf="password.errors.minlength">
+                    Password must be at least 6 characters
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">Annuler</button>
+                <button class="btn btn-primary"
+                  [disabled]="password.invalid || email.invalid || username.invalid">Modifier
+                  utilisateur</button>
+              </div>
+
+              <div class="alert alert-warning" *ngIf="f.submitted && isSignUpFailed">
+                Echec de l'ajout de l'utilisateur<br />{{ errorMessage }}
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="tab-pane fade" id="adduser" role="tabpanel" aria-labelledby="profile-tab">
+    <form *ngIf="!isSuccessful" name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
+      <div class="form-group">
+        <label for="username">Username</label>
+        <input type="text" class="form-control" name="username" [(ngModel)]="form.username" required minlength="3"
+          maxlength="20" #username="ngModel" />
+        <div class="alert-danger" *ngIf="username.errors && f.submitted">
+          <div *ngIf="username.errors.required">Username is required</div>
+          <div *ngIf="username.errors.minlength">
+            Username must be at least 3 characters
+          </div>
+          <div *ngIf="username.errors.maxlength">
+            Username must be at most 20 characters
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" class="form-control" name="email" [(ngModel)]="form.email" required email
+          #email="ngModel" />
+        <div class="alert-danger" *ngIf="email.errors && f.submitted">
+          <div *ngIf="email.errors.required">Email is required</div>
+          <div *ngIf="email.errors.email">
+            Email must be a valid email address
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" class="form-control" name="password" [(ngModel)]="form.password" required minlength="6"
+          #password="ngModel" />
+        <div class="alert-danger" *ngIf="password.errors && f.submitted">
+          <div *ngIf="password.errors.required">Password is required</div>
+          <div *ngIf="password.errors.minlength">
+            Password must be at least 6 characters
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <button class="btn btn-primary btn-block"
+          [disabled]="password.invalid || email.invalid || username.invalid">Ajouter
+          utilisateur</button>
+      </div>
+
+      <div class="alert alert-warning" *ngIf="f.submitted && isSignUpFailed">
+        Echec de l'ajout de l'utilisateur<br />{{ errorMessage }}
+      </div>
+    </form>
+
+    <div class="alert alert-success" *ngIf="isSuccessful">
+      Utilisateur ajouté avec succèes
+    </div>
+  </div>
+</div>
+<ng-template #elseBlock>
+  <div class="col-sm-6">
+    <div class="card border border-danger shadow-0 mb-3">
+      <div class="card-header">Accès interdit</div>
+      <div class="card-body">
+        <h5 class="card-title">Veuillez vous connecter</h5>
+        <p class="card-text">
+          Cliquer sur le bouton pour être rediriger vers l'interface de connexion
+        </p>
+        <a routerLink="/login">
+          <button class="btn btn-danger pull-right">Se connecter</button></a>
+      </div>
+    </div>
+  </div>
+</ng-template>

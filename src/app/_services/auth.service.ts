@@ -28,7 +28,5 @@ export class AuthService {
       password
     }, httpOptions);
   }
-  getCurrentUserRole(user_id:number):Observable<string>{
-    return this.http.get(AUTH_API+'CurrentUserRole/'+user_id,{responseType:'text'})
-  }
+
 }
